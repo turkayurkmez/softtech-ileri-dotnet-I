@@ -1,7 +1,11 @@
+using ReadFromConfig.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection(EmailOptions.MailConfigurationName));
 
 
 var app = builder.Build();

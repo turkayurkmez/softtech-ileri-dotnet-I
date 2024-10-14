@@ -14,6 +14,10 @@
             Email = email;
 
         }
+        public EmailOptions()
+        {
+                
+        }
         public const string MailConfigurationName = "MailSettings";
         public override string Host { get; set; }
         public override string Password { get; set; }
