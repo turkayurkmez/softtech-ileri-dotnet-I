@@ -1,3 +1,5 @@
+﻿using CustomMiddleware.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,7 +19,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+/*
+ * Bu API'ye gelen POST ya da PUT isteklerinde JSON verisi olup olmadığını analiz et.  --> JSONBodyMiddleware
+ * JSON verisi içinde küfür gibi istenmeyen kelimeler varsa --> BadWordsHandlerMiddleware
+ * İstemciye 400 döndür.
+ */
+
 app.UseHttpsRedirection();
+
+app.UseMiddleware<JsonBodyMiddleware>();
+app.UseMiddleware<BadWordsHandlerMiddleware>();
+
+app.MapControllers();
+
+
 
 
 
