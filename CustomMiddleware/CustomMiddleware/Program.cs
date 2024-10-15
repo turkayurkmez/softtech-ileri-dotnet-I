@@ -1,4 +1,5 @@
-﻿using CustomMiddleware.Middlewares;
+﻿using CustomMiddleware.Extensions;
+using CustomMiddleware.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseMiddleware<JsonBodyMiddleware>();
-app.UseMiddleware<BadWordsHandlerMiddleware>();
+app.UseBadWordsHandler();
 
 app.MapControllers();
 
