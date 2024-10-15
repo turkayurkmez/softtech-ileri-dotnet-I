@@ -3,6 +3,24 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+   <p>
+       Singleton: @ViewBag.Singleton
+   </p>
+    <p>
+        Transient: @ViewBag.Transient
+    </p>
+    <p>
+        Scoped: @ViewBag.Scoped
+    </p>
+    <h3>Başka bir instance'dan gelen veriler</h3>
+    <hr />
+    <p>
+       Service Singleton: @ViewBag.ServiceSingleton
+    </p>
+    <p>
+       Service Transient: @ViewBag.ServiceTransient
+    </p>
+    <p>
+        Service Scoped: @ViewBag.ServiceScoped
+    </p>
 </div>
