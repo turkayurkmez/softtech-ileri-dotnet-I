@@ -1,6 +1,14 @@
-@RouteHandlers_HostAddress = http://localhost:5230
+@RouteHandlers_HostAddress = https://localhost:7213
 
 GET {{RouteHandlers_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+POST {{RouteHandlers_HostAddress}}/
+
+###
+
+GET {{RouteHandlers_HostAddress}}/links
 
 ###
