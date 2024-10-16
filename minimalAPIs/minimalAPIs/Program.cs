@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using minimalAPIs;
@@ -20,32 +21,31 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/products", async (ProductsDb db) =>
-{
-    var products = await db.Products.ToListAsync();
-    return Results.Ok(products);
-});
+var products = app.MapGroup("/products");
 
-app.MapGet("/products/{id:int}", async (ProductsDb db, int id) =>
-{
-    var product = await db.Products.FindAsync(id);
-    return Results.Ok(product);
-});
+ProuctsOperations operations = new ProuctsOperations ();
 
-app.MapGet("/search/{name}", async (string name, ProductsDb db) =>
-{
-    var products = await db.Products.Where(p=>p.Name.Contains(name)).ToListAsync();
-    return Results.Ok(products);
-});
+products.MapGet("/", operations.GetAllProductsAsync );
+products.MapGet("/{id:int}", operations.GetProductById);
+products.MapGet("/search/{name}", operations.SearchByName);
+products.MapPost("/", operations.CreateProduct);
+products.MapPut("/{id:int}", operations.UpdateExisting);
 
-app.MapPost("/products", async (ProductsDb db, [FromBody]Product product) =>
+products.MapDelete("/{id:int}", async (int id, ProductsDb db) =>
 {
-    db.Products.Add(product);
-    await db.SaveChangesAsync();
-    return Results.Created($"/products/{product.Id}", product);
+    if (await db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id) is Product product)
+    {
+        db.Products.Remove(product);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+
+    return Results.NotFound();
 });
 
 
 app.UseHttpsRedirection();
 app.Run();
+
+
 

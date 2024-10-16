@@ -1,9 +1,18 @@
 ﻿using Filters.Models;
+using System.Diagnostics;
 
 namespace Filters.Services
 {
     public class ProductService : IProductService
     {
+        private ILogger<ProductService> _logger;
+        private Stopwatch stopwatch;
+
+        public ProductService(ILogger<ProductService> logger)
+        {
+            _logger = logger;
+        }
+
         private List<Product> products = new()
         {
              new(){ Id=1, Name="A", Price=1},
@@ -14,7 +23,15 @@ namespace Filters.Services
 
         public Product? GetProduct(int id)
         {
-            return products.Find(p => p.Id == id);
+            stopwatch = Stopwatch.StartNew();
+            var product = products.Find(p => p.Id == id);
+            if (stopwatch.IsRunning)
+            {
+                stopwatch.Stop();
+                _logger.LogInformation($"db'de geçen toplam süresi: {stopwatch.Elapsed.TotalMilliseconds}");
+            }
+
+            return product; 
         }
 
         public bool IsExists(int id)

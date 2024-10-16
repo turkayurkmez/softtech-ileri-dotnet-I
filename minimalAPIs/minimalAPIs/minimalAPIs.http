@@ -1,6 +1,32 @@
-@minimalAPIs_HostAddress = http://localhost:5093
+@minimalAPIs_HostAddress = https://localhost:7292
 
-GET {{minimalAPIs_HostAddress}}/weatherforecast/
-Accept: application/json
+
+POST {{minimalAPIs_HostAddress}}/products
+Content-Type:application/json
+{
+  "name":"test product 2",
+  "price":15
+}
+
+###
+
+GET {{minimalAPIs_HostAddress}}/products
+
+###
+
+GET {{minimalAPIs_HostAddress}}/products/1
+
+###
+
+PUT {{minimalAPIs_HostAddress}}/products/1
+Content-Type:application/json
+{
+  "id": 1,
+  "name":"Deneme",
+  "price":350
+}
+###
+
+DELETE {{minimalAPIs_HostAddress}}/products/1
 
 ###
