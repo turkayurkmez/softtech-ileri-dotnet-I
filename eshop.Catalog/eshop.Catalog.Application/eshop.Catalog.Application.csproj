@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eshop.Catalog.Domain\eshop.Catalog.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Products\GetProducts\" />
+    <Folder Include="Features\Products\CreateNewProduct\" />
+    <Folder Include="Features\Products\ChangeProductPrice\" />
+  </ItemGroup>
+
+</Project>

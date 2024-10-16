@@ -12,3 +12,7 @@ POST {{RouteHandlers_HostAddress}}/
 GET {{RouteHandlers_HostAddress}}/links
 
 ###
+
+GET {{RouteHandlers_HostAddress}}/products/all
+
+###

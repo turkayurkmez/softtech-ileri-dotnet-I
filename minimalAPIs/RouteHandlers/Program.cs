@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Auth operasyonları için standart konfigürasyon.
+
+
 var app = builder.Build();
 
 //app.MapGet("/", () => "Bu bir get request'tir");

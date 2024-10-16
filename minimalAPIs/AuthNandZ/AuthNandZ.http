@@ -1,0 +1,10 @@
+@AuthNandZ_HostAddress = https://localhost:7200
+
+GET {{AuthNandZ_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{AuthNandZ_HostAddress}}/weatherforecast
+
+###
