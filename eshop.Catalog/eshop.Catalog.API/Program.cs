@@ -1,4 +1,10 @@
+using eshop.Catalog.Application.Contracts;
+using eshop.Catalog.Application.Extensions;
+using eshop.Catalog.Application.Features.Products.CreateNewProduct;
+using eshop.Catalog.Application.Features.Products.GetProducts;
 using eshop.Catalog.Infrastructure.Data;
+using eshop.Catalog.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +16,20 @@ builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("db");
 builder.Services.AddDbContext<CatalogDbContext>(option => option.UseSqlServer(connectionString));
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddApplicationService();
 
+builder.Services.AddCors(option => option.AddPolicy("allow", builder =>
+{
+    builder.AllowAnyMethod();
+    builder.AllowAnyHeader();
+    builder.AllowAnyOrigin();
+    /*
+       http://www.x.com
+       https://post.x.com:8181
+       
+     */
+}));
 
 
 var app = builder.Build();
@@ -24,29 +43,24 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
+
+app.MapGet("/products", async (IMediator mediator) =>
 {
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    var response = await mediator.Send(new GetProductsRequestQuery());
+    return Results.Ok(response);
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+app.MapPost("/products", async (IMediator mediator, CreateProductRequest request) =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+
+    var response = await mediator.Send(request);
+    return Results.Created($"/products/{response.Id}", null);
+
+});
+
+app.UseCors("allow");
+
+app.Run();

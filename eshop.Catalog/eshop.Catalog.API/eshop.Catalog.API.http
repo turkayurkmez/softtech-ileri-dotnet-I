@@ -1,6 +1,17 @@
-@eshop.Catalog.API_HostAddress = http://localhost:5237
 
-GET {{eshop.Catalog.API_HostAddress}}/weatherforecast/
-Accept: application/json
+@HostAddress = https://localhost:7258
 
+
+GET {{HostAddress}}/products
+
+###
+
+POST {{HostAddress }}/products
+Content-Type: application/json
+{
+   "name":"Ürün  A",
+   "price":17,
+   "imageUrl":"sample.png",
+   "categoryId":1
+}
 ###

@@ -11,6 +11,8 @@ namespace eshop.Catalog.Application.Contracts
     {
         //YAGNI: You ain't gonna need it!
         Task<IEnumerable<T>> GetAllAsync();
+
+        Task CreateAsync(T entity);
         
     }
 }
