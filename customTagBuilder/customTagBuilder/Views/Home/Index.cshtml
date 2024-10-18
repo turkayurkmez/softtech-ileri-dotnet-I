@@ -20,14 +20,15 @@
     }
 </div>
 
-    <ul class="pagination pagination-lg">
-        @for (int i = 1; i < Model.PagingInfo.PageCount; i++)
+@*     <ul class="pagination pagination-lg">
+        @for (int i = 1; i <= Model.PagingInfo.PageCount; i++)
         {
             <li class="page-item"><a class="page-link" asp-action="Index" asp-route-pageNo="@i" >@i</a></li>
         }       
      
       
-    </ul>
+    </ul> *@
 
-    @* <div asp-info="@Model.PagingInfo" action="Index"></div> *@
+    @* <div page-model="@Model.PagingInfo" page-action="Index"></div> *@
 
+    <div page-model="@Model.PagingInfo" page-action="Index"></div>

@@ -32,8 +32,8 @@ namespace customTagBuilder.Controllers
             var pagingEmployees = employees.ToList().Take(start..end);
 
             var model = new IndexViewModel
-            {
-                Items = pagingEmployees,
+            {  
+              Items = pagingEmployees,
                 PagingInfo = pagingInfo
             };
             return View(model);
